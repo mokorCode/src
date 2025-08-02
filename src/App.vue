@@ -1,4 +1,5 @@
 <template>
+  <h1>Welcome 页面加载成功</h1>
   <div>
     <router-view></router-view>
   </div>
