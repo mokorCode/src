@@ -1,8 +1,18 @@
 <template>
     <div class="top">
+        <div ref="osuWelcome" class="osu-welcome">
+            <span>w</span>
+            <span>e</span>
+            <span>l</span>
+            <span>c</span>
+            <span>o</span>
+            <span>m</span>
+            <span>e</span>
+        </div>
+        <div ref="topBlock" class="top-block"></div>
         <DefaultNav />
         <main class="osu-main">
-            <div class="osu-block"></div>
+            <div ref="osuBlock" class="osu-block"></div>
             <OsuForMusic />
         </main>
         <footer>
@@ -15,18 +25,112 @@
 import DefaultNav from './navs/DefaultNav.vue';
 import OsuForMusic from './items/OsuForMusic.vue';
 import useOsuBackGround from '@/hooks/useOsuBackGround';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import useOsuReady from '@/hooks/useOsuReady';
+
+
+let osuBlock = ref(null);
+let topBlock = ref(null);
+let osuWelcome = ref(null);
+
+
 onMounted(() => {
     useOsuBackGround();
+    useOsuReady(topBlock, osuWelcome, osuBlock);
 });
 </script>
 
+<style>
+@keyframes osu-welcome {
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 0px cyan;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        box-shadow: 0 0 20px cyan;
+        border: 1px solid cyan;
+        color: skyblue;
+        text-shadow: 0 0px 20px cyan;
+    }
+}
+
+@keyframes osu-welcome-span {
+    0% {
+        margin: 0 2px;
+    }
+
+    100% {
+        margin: 0 40px;
+    }
+
+}
+
+@keyframes osu-block-light {
+    0% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+
+}
+
+@keyframes osu-block-remove {
+    100% {
+        opacity: 0;
+    }
+
+}
+</style>
 <style scoped>
 .osu-options {
     position: fixed;
     left: 50%;
     transition: left;
     color: white;
+}
+
+
+.osu-welcome {
+    width: 60%;
+    aspect-ratio: 1/1;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 64px;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    opacity: 1;
+    border-radius: 50%;
+    z-index: 101;
+}
+
+
+
+.top-block {
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background-color: black;
 }
 
 main {

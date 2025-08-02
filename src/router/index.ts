@@ -1,4 +1,5 @@
 import Welcome from "@/components/Welcome.vue";
+import Options from "@/components/Options.vue";
 import { createRouter, createWebHashHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -10,6 +11,10 @@ const router = createRouter({
         {
             path:'/welcome',
             component:Welcome
+        },
+        {
+            path:'/options',
+            component:Options
         }
     ]
 })

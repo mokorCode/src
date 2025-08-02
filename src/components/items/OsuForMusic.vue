@@ -3,11 +3,13 @@
         <img @click="onClickOsu" ref="img" :src="defaultOsu" alt="OSU!">
     </div>
     <div v-if="isShowOptions" ref="controls" class="container">
-        <div class="play controls">Play</div>
-        <div class="idk controls">
+        <RouterLink class="play controls">Play
+        </RouterLink>
+        <RouterLink class="idk controls">
             <marquee>To be continue</marquee>
-        </div>
-        <div class="options controls">Options</div>
+        </RouterLink>
+        <RouterLink class="options controls" to="/options">Options
+        </RouterLink>
     </div>
     <!-- <canvas class="osu-canvas"></canvas> -->
 </template>
@@ -15,9 +17,10 @@
 <script setup name='OsuForMusic'>
 import defaultOsu from '@/assets/default-osu.svg'
 import useMusicManage from '@/hooks/useOsuMusicManage'
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import useOsuClickOptions from '@/hooks/useOsuClickOptions';
 import { nextTick } from 'vue';
+import { RouterLink } from 'vue-router';
 
 
 let controls = ref(null);
@@ -36,6 +39,7 @@ function onClickOsu() {
     });
     osuManage.value.classList.add('osu-translate');
 };
+
 </script>
 
 <style>

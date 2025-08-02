@@ -1,9 +1,16 @@
 import myTheme from '@/assets/myTheme.mp3';
-const musicList = [myTheme];
+import virgil from '@/assets/virgil.mp3'
+import { onUnmounted } from 'vue';
+const musicList = [myTheme,virgil];
 let p = 0;
 
 export default function () {
     const audio = new Audio(musicList[p]);
+    audio.onended = () => {
+        if (p < musicList.length-1) { p += 1 } else {
+            p=0
+        };
+    };
     // 获取窗口音频上下文
     const audioContext = new window.AudioContext()
 
@@ -48,8 +55,6 @@ export default function () {
                 lightElement.classList.add('osu-right-light');
                 lightPosition = 'left';
             }
-            console.log(lightPosition);
-            console.log(lightElement);
             document.body.appendChild(lightElement);
             setTimeout(() => {
                 lightElement.remove();
@@ -114,6 +119,11 @@ export default function () {
     audio.play();
     
     draw();
+    onUnmounted(() => {
+        if (!audio.paused) audio.pause();
+        audio.remove();
+        canvas.remove();
+    });
     
 };
 
