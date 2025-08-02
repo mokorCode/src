@@ -22,6 +22,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.osu-options {
+    position: fixed;
+    left: 50%;
+    transition: left;
+    color: white;
+}
+
 main {
     background: black;
     background-size: 100%;
@@ -31,12 +38,14 @@ main {
     display: flex;
     flex-direction: column;
 }
-.osu-block{
+
+.osu-block {
     height: 100%;
     width: 100%;
     opacity: 0.5;
     background-color: black;
 }
+
 footer {
     z-index: 10;
     height: 20px;

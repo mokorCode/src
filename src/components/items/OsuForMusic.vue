@@ -1,6 +1,13 @@
 <template>
-    <div class="osu-for-manage">
-        <img :src="defaultOsu" alt="OSU!">
+    <div class="osu-for-manage" ref="osuManage">
+        <img @click="onClickOsu" ref="img" :src="defaultOsu" alt="OSU!">
+    </div>
+    <div v-if="isShowOptions" ref="controls" class="container">
+        <div class="play controls">Play</div>
+        <div class="idk controls">
+            <marquee>To be continue</marquee>
+        </div>
+        <div class="options controls">Options</div>
     </div>
     <!-- <canvas class="osu-canvas"></canvas> -->
 </template>
@@ -8,11 +15,27 @@
 <script setup name='OsuForMusic'>
 import defaultOsu from '@/assets/default-osu.svg'
 import useMusicManage from '@/hooks/useOsuMusicManage'
-window.onload = () => {
+import { onMounted, ref } from 'vue';
+import useOsuClickOptions from '@/hooks/useOsuClickOptions';
+import { nextTick } from 'vue';
+
+
+let controls = ref(null);
+let img = ref(null);
+let osuManage = ref(null);
+const { isShowOptions, showOptions } = useOsuClickOptions(img, controls);
+
+onMounted(() => {
     useMusicManage();
-    const osu = document.querySelector('.osu-for-manage');
-    osu.onclick = () => { osu.classList.add('osu-tanslate') };
-}
+})
+function onClickOsu() {
+    showOptions();
+    osuManage.value.style.pointerEvents = 'none';
+    nextTick(() => {
+        setTimeout(() => { controls.value.classList.add('container-translate'); }, 500)
+    });
+    osuManage.value.classList.add('osu-translate');
+};
 </script>
 
 <style>
@@ -20,26 +43,82 @@ window.onload = () => {
     --transform: scale(1.4);
 }
 
+.container {
+    display: flex;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    flex-direction: column;
+    z-index: 0;
+    user-select: none;
+    height: 60%;
+    transition: transform 0.5s ease;
+    transform: translate(-50%, -50%);
+    /* background: cyan; */
+    justify-content: center;
+    align-items: center;
+
+}
+
+.controls {
+    display: flex;
+    font-size: 58px;
+    font-weight: 800;
+    cursor: pointer;
+    width: 500px;
+    height: 100px;
+    color: pink;
+    line-height: 45px;
+    border: 5px solid rgb(247, 128, 211);
+    background: linear-gradient(45deg, aqua, blue);
+    margin-top: 16px;
+    transition: transform 0.5s ease;
+    flex-direction: column;
+    align-items: end;
+
+}
+
+.play {
+    border-radius: 0 128px 32px 0;
+}
+
+.options {
+    border-radius: 0 32px 128px 0;
+}
+
+.idk {
+    border-radius: 0 32px 32px 0;
+    font-size: 48px;
+}
+
+.container-translate .controls {
+    transform: translate(20%);
+}
+
+.controls:hover {
+    transform: translate(40%);
+}
+
 .osu-for-manage {
     position: fixed;
     rotate: 0deg;
-    box-shadow: 0 0 50px gray;
-    left: 50%;
     z-index: 5;
     top: 50%;
+    left: 50%;
     translate: -50% -50%;
     width: 480px;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    transition: left 1s ease-out;
+    transition: left 0.5s ease-out;
     transform: var(--transform);
 }
+
 
 .osu-for-manage:hover {
     cursor: pointer;
 }
 
-.osu-tanslate {
+.osu-translate {
     left: 35%;
 }
 
@@ -71,7 +150,7 @@ window.onload = () => {
 
 @keyframes fadeLight {
     from {
-        opacity: 0.9;
+        opacity: 0.8;
     }
 
     to {
@@ -85,6 +164,7 @@ window.onload = () => {
     left: 50%;
     top: 50%;
     z-index: 0;
+    pointer-events: none;
     translate: -50% -50%;
     width: 500px;
     aspect-ratio: 1/1;
