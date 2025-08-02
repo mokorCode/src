@@ -6,6 +6,9 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    outDir: 'docs' // 改成 docs 文件夹
+  },
   base: './',
   plugins: [
     vue(),
