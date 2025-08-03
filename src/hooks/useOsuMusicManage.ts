@@ -7,13 +7,9 @@ let p = 0;
 
 export default function () {
     let audio = new Audio(musicList[p]);
-    console.log(getComputedStyle(audio));
     audio.onended = () => {
         p < musicList.length - 1 ? p += 1 : p = 0;
-        console.log('完成！！久久！！完成！！');
-        console.log('当前 p 为 ', p);
-        audio.src = musicList[p];
-        audio.play();
+        console.log('完成！！久久！！完成！！ 切换下一首音乐...');
     };
     // 获取窗口音频上下文
     const audioContext = new window.AudioContext()

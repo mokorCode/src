@@ -41,14 +41,19 @@ function osuInit(img, controls) {
 }
 
 onMounted(async () => {
+    if (performance.getEntriesByType('navigation')[0].type != 'navigate') {
+        osuWelcome.value.remove();
+        topBlock.value.style.opacity = 0;
+        osuBlock.value.style.animation = 'osu-block-light 2s ease-out 1 alternate forwards';
+    };
     useOsuBackGround();
     osuMusicUnmount = (await useOsuReady(topBlock, osuWelcome, osuBlock)).osuMusicUnmount;
 });
 
 onUnmounted(() => {
-    console.log(osuMusicUnmount);
     if (osuMusicUnmount) osuMusicUnmount();
 });
+
 </script>
 
 <style>
