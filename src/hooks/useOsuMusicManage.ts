@@ -1,15 +1,19 @@
 import myTheme from '@/assets/myTheme.mp3';
 import virgil from '@/assets/virgil.mp3'
+import welcome from '@/assets/welcome.mp3'
 import { onUnmounted } from 'vue';
-const musicList = [myTheme,virgil];
+const musicList = [welcome,virgil,myTheme];
 let p = 0;
 
 export default function () {
-    const audio = new Audio(musicList[p]);
+    let audio = new Audio(musicList[p]);
+    console.log(getComputedStyle(audio));
     audio.onended = () => {
-        if (p < musicList.length-1) { p += 1 } else {
-            p=0
-        };
+        p < musicList.length - 1 ? p += 1 : p = 0;
+        console.log('完成！！久久！！完成！！');
+        console.log('当前 p 为 ', p);
+        audio.src = musicList[p];
+        audio.play();
     };
     // 获取窗口音频上下文
     const audioContext = new window.AudioContext()
@@ -39,39 +43,39 @@ export default function () {
     const r = parseFloat(getComputedStyle(osu!).width) - 100;
     let circleDraw = 0;
     let lightPosition = 'left';
-    function getAverage(arr:Uint8Array<ArrayBuffer>) {
-            let count = 0;
-            for (let i = 0; i < arr.length; i++){
-                count += arr[i];
-            }
-            return count / arr.length;
-        };
-        function light() {
-            const lightElement = document.createElement('div');
-            if (lightPosition == 'left') {
-                lightElement.classList.add('osu-left-light');
-                lightPosition = 'right';
-            } else {
-                lightElement.classList.add('osu-right-light');
-                lightPosition = 'left';
-            }
-            document.body.appendChild(lightElement);
-            setTimeout(() => {
-                lightElement.remove();
-            },1000)
-        };
-        function bounceLight() { 
-            let isStop = false;
-            return () => {
-                if (isStop) return;
-                if (getAverage(data.slice(13, 14)) > 3) {
-                    light();
-                    isStop = true;
-                    setTimeout(() => {
+    function getAverage(arr: Uint8Array<ArrayBuffer>) {
+        let count = 0;
+        for (let i = 0; i < arr.length; i++) {
+            count += arr[i];
+        }
+        return count / arr.length;
+    };
+    function light() {
+        const lightElement = document.createElement('div');
+        if (lightPosition == 'left') {
+            lightElement.classList.add('osu-left-light');
+            lightPosition = 'right';
+        } else {
+            lightElement.classList.add('osu-right-light');
+            lightPosition = 'left';
+        }
+        document.body.appendChild(lightElement);
+        setTimeout(() => {
+            lightElement.remove();
+        }, 1000)
+    };
+    function bounceLight() {
+        let isStop = false;
+        return () => {
+            if (isStop) return;
+            if (getAverage(data.slice(13, 14)) > 3) {
+                light();
+                isStop = true;
+                setTimeout(() => {
                     isStop = false;
-                    }, 300);
-                 }
+                }, 300);
             }
+        }
     };
     let offset = 0;
     const runLight = bounceLight();
@@ -84,23 +88,23 @@ export default function () {
             
         runLight();
         let x = 0;
-        offset -= Math.PI /(1000*2);
+        offset -= Math.PI / (1000 * 2);
         for (let i = 0; i < bufferLength; i++) {
-            const val = data[i]/255 *50;
+            const val = data[i] / 255 * 50;
             ctx!.save();
             osu.style.scale = `${1 + val / 255 * 2}`;
-            ctx!.rotate(Math.PI * i / bufferLength +offset);
-            ctx!.fillStyle = `rgba(255,255,255,${1-val / 255})`;
-            ctx!.strokeStyle = `rgba(255,255,255,${1-val / 255})`;
+            ctx!.rotate(Math.PI * i / bufferLength + offset);
+            ctx!.fillStyle = `rgba(255,255,255,${1 - val / 255})`;
+            ctx!.strokeStyle = `rgba(255,255,255,${1 - val / 255})`;
             ctx!.strokeRect(-10, r / 2, 30, val);
             ctx!.fillRect(0, r / 2, 10, val - 10);
             ctx!.restore();
 
             ctx!.save();
             osu.style.scale = `${1 + val / 255 * 2}`;
-            ctx!.rotate(Math.PI * i / bufferLength +Math.PI +offset);
-            ctx!.fillStyle = `rgba(255,255,255,${1-val / 255})`;
-            ctx!.strokeStyle = `rgba(255,255,255,${1-val / 255})`;
+            ctx!.rotate(Math.PI * i / bufferLength + Math.PI + offset);
+            ctx!.fillStyle = `rgba(255,255,255,${1 - val / 255})`;
+            ctx!.strokeStyle = `rgba(255,255,255,${1 - val / 255})`;
             ctx!.strokeRect(-10, r / 2, 30, val);
             ctx!.fillRect(0, r / 2, 10, val - 10);
             ctx!.restore();
@@ -108,8 +112,8 @@ export default function () {
             ctx!.save();
             ctx!.translate(-100, 0);
             ctx!.fillStyle = 'rgb(0, 255,255)';
-            ctx!.fillRect(x, canvas.height/5, 2, -val);
-            x += canvas.width / (bufferLength*3) + 1;
+            ctx!.fillRect(x, canvas.height / 5, 2, -val);
+            x += canvas.width / (bufferLength * 3) + 1;
             ctx!.restore();
         };
         requestAnimationFrame(draw);
@@ -119,11 +123,12 @@ export default function () {
     audio.play();
     
     draw();
-    onUnmounted(() => {
+    function osuMusicUnmount() {
         if (!audio.paused) audio.pause();
         audio.remove();
         canvas.remove();
-    });
+    };
+    return {osuMusicUnmount}
     
 };
 

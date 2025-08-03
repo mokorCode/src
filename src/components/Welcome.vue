@@ -13,7 +13,7 @@
         <DefaultNav />
         <main class="osu-main">
             <div ref="osuBlock" class="osu-block"></div>
-            <OsuForMusic />
+            <OsuForMusic :osuInit=osuInit />
         </main>
         <footer>
             <p>osu! standard web by mokor</p>
@@ -25,18 +25,29 @@
 import DefaultNav from './navs/DefaultNav.vue';
 import OsuForMusic from './items/OsuForMusic.vue';
 import useOsuBackGround from '@/hooks/useOsuBackGround';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import useOsuReady from '@/hooks/useOsuReady';
+import useOsuClickOptions from '@/hooks/useOsuClickOptions';
 
 
 let osuBlock = ref(null);
 let topBlock = ref(null);
 let osuWelcome = ref(null);
+let osuMusicUnmount = null;
 
 
-onMounted(() => {
+function osuInit(img, controls) {
+    return useOsuClickOptions(img, controls);
+}
+
+onMounted(async () => {
     useOsuBackGround();
-    useOsuReady(topBlock, osuWelcome, osuBlock);
+    osuMusicUnmount = (await useOsuReady(topBlock, osuWelcome, osuBlock)).osuMusicUnmount;
+});
+
+onUnmounted(() => {
+    console.log(osuMusicUnmount);
+    if (osuMusicUnmount) osuMusicUnmount();
 });
 </script>
 

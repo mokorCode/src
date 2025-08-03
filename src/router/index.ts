@@ -15,6 +15,14 @@ const router = createRouter({
         {
             path:'/options',
             component:Options
+        },
+        {
+            path:'/play',
+            component:Options
+        },
+        {
+            path:'/tobecontinue',
+            component:Options
         }
     ]
 })

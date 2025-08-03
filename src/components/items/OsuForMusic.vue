@@ -3,9 +3,9 @@
         <img @click="onClickOsu" ref="img" :src="defaultOsu" alt="OSU!">
     </div>
     <div v-if="isShowOptions" ref="controls" class="container">
-        <RouterLink class="play controls">Play
+        <RouterLink class="play controls" to="/play">Play
         </RouterLink>
-        <RouterLink class="idk controls">
+        <RouterLink class="idk controls" to="/tobecontinue">
             <marquee>To be continue</marquee>
         </RouterLink>
         <RouterLink class="options controls" to="/options">Options
@@ -16,21 +16,18 @@
 
 <script setup name='OsuForMusic'>
 import defaultOsu from '@/assets/default-osu.svg'
-import useMusicManage from '@/hooks/useOsuMusicManage'
-import { onMounted, onUnmounted, ref } from 'vue';
-import useOsuClickOptions from '@/hooks/useOsuClickOptions';
-import { nextTick } from 'vue';
+import { ref } from 'vue';
+import { nextTick, defineProps } from 'vue';
 import { RouterLink } from 'vue-router';
+const { osuInit } = defineProps(['osuInit']);
 
 
 let controls = ref(null);
 let img = ref(null);
 let osuManage = ref(null);
-const { isShowOptions, showOptions } = useOsuClickOptions(img, controls);
+const { isShowOptions, showOptions } = osuInit(img, controls);
 
-onMounted(() => {
-    useMusicManage();
-})
+
 function onClickOsu() {
     showOptions();
     osuManage.value.style.pointerEvents = 'none';
