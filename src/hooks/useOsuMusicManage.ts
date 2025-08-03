@@ -11,14 +11,13 @@ export default function () {
         p < musicList.length - 1 ? p += 1 : p = 0;
         console.log('完成！！久久！！完成！！ 切换下一首音乐...');
     };
-    // 获取窗口音频上下文
+    // 上下文
     const audioContext = new window.AudioContext()
 
-    // 对分析器初始化
+    // analyser
     const analyser = audioContext.createAnalyser();
     analyser.fftSize = 32;
     const bufferLength = analyser.frequencyBinCount;
-    // array 设置为节点数量长度
     let data = new Uint8Array(bufferLength);
 
     // 资源
