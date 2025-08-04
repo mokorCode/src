@@ -23,6 +23,12 @@ import usePages from '@/hooks/usePages';
 import sd_play from '@/assets/sounds/menu-play-click.wav'
 import sd_options from '@/assets/sounds/menu-options-click.wav'
 import sd_multiplayer from '@/assets/sounds/menu-multiplayer-click.wav'
+const audio1 = new Audio(sd_play);
+const audio2 = new Audio(sd_multiplayer);
+const audio3 = new Audio(sd_options);
+audio1.load();
+audio2.load();
+audio3.load();
 
 
 let controls = ref(null);
@@ -32,17 +38,17 @@ const { isShowOptions, showOptions } = osuInit(img, controls);
 
 
 function viewPlay() {
-    new Audio(sd_play).play();
+    audio1.play();
     usePages("1");
 
 }
 function viewIdk() {
-    new Audio(sd_multiplayer).play();
+    audio2.play();
     usePages("2");
 
 }
 function viewOptions() {
-    new Audio(sd_options).play();
+    audio3.play();
     usePages("3");
 
 }
