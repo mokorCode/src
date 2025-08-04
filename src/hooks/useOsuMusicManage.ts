@@ -12,14 +12,13 @@ export default function () {
         audio.src = musicList[p];
         audio.play();
     };
-    // 获取窗口音频上下文
+    // 上下文
     const audioContext = new window.AudioContext()
 
-    // 对分析器初始化
+    // analyser
     const analyser = audioContext.createAnalyser();
     analyser.fftSize = 32;
     const bufferLength = analyser.frequencyBinCount;
-    // array 设置为节点数量长度
     let data = new Uint8Array(bufferLength);
 
     // 资源
