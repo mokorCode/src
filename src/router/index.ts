@@ -1,5 +1,7 @@
 import Welcome from "@/components/Welcome.vue";
-import Options from "@/components/Options.vue";
+import Options from "@/views/Options.vue";
+import Play from "@/views/play.vue";
+import Idk from "@/views/idk.vue";
 import { createRouter, createWebHashHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -18,11 +20,11 @@ const router = createRouter({
         },
         {
             path:'/play',
-            component:Options
+            component:Play
         },
         {
             path:'/tobecontinue',
-            component:Options
+            component:Idk
         }
     ]
 })

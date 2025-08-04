@@ -48,9 +48,14 @@ onMounted(async () => {
     };
     useOsuBackGround();
     osuMusicUnmount = (await useOsuReady(topBlock, osuWelcome, osuBlock)).osuMusicUnmount;
-});
+    console.log('osuMusicUncount: ', osuMusicUnmount);
 
+});
+window.onbeforeunload = () => {
+
+}
 onUnmounted(() => {
+    console.log('卸载欢迎页内容 ', osuMusicUnmount);
     if (osuMusicUnmount) osuMusicUnmount();
 });
 

@@ -1,0 +1,57 @@
+/* UI */
+
+.fade-in-block {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 800;
+    left: 0;
+    top: 0;
+    background: black;
+    animation: fade-in-block 1s ease forwards;
+    -webkit-animation: fade-in-block 1s ease forwards;
+}
+
+@keyframes fade-in-block {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out-block {
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* text */
+
+.text-marquee-8s {
+    animation: marquee 8s linear infinite;
+    -webkit-animation: marquee 8s linear infinite;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        -moz-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+        -o-transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+    }
+}

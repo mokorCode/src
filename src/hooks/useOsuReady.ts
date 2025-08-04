@@ -6,8 +6,6 @@ export default function (block: any, welcome: any, osuBlock: any) {
     if (loadType == 'navigate') { isNormal = true; }
     if (isNormal) {
         return new Promise((resolve) => {
-            window.onclick = () => {
-        
                 console.log('页面加载类型: ' + loadType);
                 block.value.style.animation = 'none';
                 welcome.value.style.animation = 'osu-welcome 5s ease 1 alternate forwards';
@@ -24,8 +22,8 @@ export default function (block: any, welcome: any, osuBlock: any) {
                 setTimeout(() => {
                     resolve(useOsuMusicManage());
                 }, 3500)
-            }
+            
         })
-    } else {useOsuMusicManage();
+    } else {return useOsuMusicManage();
     }
 };

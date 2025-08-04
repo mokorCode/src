@@ -3,13 +3,13 @@
         <img @click="onClickOsu" ref="img" :src="defaultOsu" alt="OSU!">
     </div>
     <div v-if="isShowOptions" ref="controls" class="container">
-        <RouterLink class="play controls" to="/play">Play
-        </RouterLink>
-        <RouterLink class="idk controls" to="/tobecontinue">
-            <marquee>To be continue</marquee>
-        </RouterLink>
-        <RouterLink class="options controls" to="/options">Options
-        </RouterLink>
+        <div class="play controls" @click='viewPlay'>Play
+        </div>
+        <div class="idk controls overflow-hidden" @click='viewIdk'>
+            <p class="text-marquee-8s">To be continue</p>
+        </div>
+        <div class="options controls" @click='viewOptions'>Options
+        </div>
     </div>
     <!-- <canvas class="osu-canvas"></canvas> -->
 </template>
@@ -18,8 +18,11 @@
 import defaultOsu from '@/assets/default-osu.svg'
 import { ref } from 'vue';
 import { nextTick, defineProps } from 'vue';
-import { RouterLink } from 'vue-router';
-const { osuInit } = defineProps(['osuInit']);
+const { osuInit, getTopBlock } = defineProps(['osuInit']);
+import usePages from '@/hooks/usePages';
+import sd_play from '@/assets/sounds/menu-play-click.wav'
+import sd_options from '@/assets/sounds/menu-options-click.wav'
+import sd_multiplayer from '@/assets/sounds/menu-multiplayer-click.wav'
 
 
 let controls = ref(null);
@@ -28,6 +31,21 @@ let osuManage = ref(null);
 const { isShowOptions, showOptions } = osuInit(img, controls);
 
 
+function viewPlay() {
+    new Audio(sd_play).play();
+    usePages("1");
+
+}
+function viewIdk() {
+    new Audio(sd_multiplayer).play();
+    usePages("2");
+
+}
+function viewOptions() {
+    new Audio(sd_options).play();
+    usePages("3");
+
+}
 function onClickOsu() {
     showOptions();
     osuManage.value.style.pointerEvents = 'none';

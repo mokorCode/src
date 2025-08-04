@@ -1,7 +1,6 @@
 import myTheme from '@/assets/myTheme.mp3';
 import virgil from '@/assets/virgil.mp3'
 import welcome from '@/assets/welcome.mp3'
-import { onUnmounted } from 'vue';
 const musicList = [welcome,virgil,myTheme];
 let p = 0;
 
@@ -10,6 +9,8 @@ export default function () {
     audio.onended = () => {
         p < musicList.length - 1 ? p += 1 : p = 0;
         console.log('完成！！久久！！完成！！ 切换下一首音乐...');
+        audio.src = musicList[p];
+        audio.play();
     };
     // 获取窗口音频上下文
     const audioContext = new window.AudioContext()
@@ -32,6 +33,7 @@ export default function () {
     // canvas.style.zIndex = '50'; ////////////////
     document.body.appendChild(canvas);
     canvas.width = parseFloat(getComputedStyle(canvas).width);
+    
     canvas.height = parseFloat(getComputedStyle(canvas).height);
     const ctx = canvas.getContext('2d');
     ctx!.translate(canvas.width / 2, canvas.height / 2);
