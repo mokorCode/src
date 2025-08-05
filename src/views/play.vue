@@ -129,7 +129,7 @@ window.onresize = () => {
     z-index: 0;
     top: 0;
     left: 0;
-    background: url('../assets/bgs/41.jpg');
+    background: black;
     background-size: 100%;
 }
 
