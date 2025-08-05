@@ -25,7 +25,7 @@
 <script setup name='DefaultNav'>
 </script>
 
-<style scoped>
+<style>
 .navbar {
     z-index: 10;
     filter: invert(1);

@@ -1,7 +1,7 @@
 import Welcome from "@/components/Welcome.vue";
 import Options from "@/views/Options.vue";
-import Play from "@/views/play.vue";
-import Idk from "@/views/idk.vue";
+import Play from "@/views/Play.vue";
+import Idk from "@/views/Idk.vue";
 import { createRouter, createWebHashHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),

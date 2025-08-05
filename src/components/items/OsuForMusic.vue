@@ -26,9 +26,13 @@ import sd_multiplayer from '@/assets/sounds/menu-multiplayer-click.wav'
 const audio1 = new Audio(sd_play);
 const audio2 = new Audio(sd_multiplayer);
 const audio3 = new Audio(sd_options);
+audio1.preload = 'auto';
+audio2.preload = 'auto';
+audio3.preload = 'auto';
 audio1.load();
 audio2.load();
 audio3.load();
+console.log(audio1, audio2, audio3);
 
 
 let controls = ref(null);
